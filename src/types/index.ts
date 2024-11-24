@@ -45,7 +45,7 @@ export interface ICard extends IProduct {
 }
 
 export interface IPage {
-  cuounter: number;
+  counter: number;
   catalog: HTMLElement[];
 }
 
@@ -84,6 +84,6 @@ export interface ILarekApi {
 }
 
 export interface IOrderResult {
-  id: string;
-  total: number;
+  id?: string;
+  total?: number;
 }

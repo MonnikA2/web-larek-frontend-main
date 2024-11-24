@@ -26,7 +26,7 @@ export class PaymentForm extends Form<IPaymentForm> {
     }
   }
 
-  toggeStateButtons(target: HTMLElement) {
+  toggleStateButtons(target: HTMLElement) {
     this._cardButton.classList.toggle('button_alt-active');
     this._cashButton.classList.toggle('button_alt-active');
   }

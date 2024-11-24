@@ -3,7 +3,6 @@ import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
 import { IEvents } from "../base/events";
 
-
 export class Form<T> extends Component<IFormState> {
   protected _submit: HTMLButtonElement; // Кнопка отправки формы 
   protected _errors: HTMLElement; // Элемент для отображения ошибок формы
@@ -25,8 +24,6 @@ export class Form<T> extends Component<IFormState> {
     const field = target.name as keyof T;
     const value = target.value;
     this.onInputChange(field, value);
-    console.log(value)
-    
   } 
 
   protected handleSubmit(e: Event): void {
@@ -53,7 +50,7 @@ export class Form<T> extends Component<IFormState> {
     });
   }
 
-  set valid(value: boolean) {
+  set inValid(value: boolean) {
     this._submit.disabled = !value;
   }
 

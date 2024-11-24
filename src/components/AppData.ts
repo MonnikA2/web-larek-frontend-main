@@ -39,9 +39,9 @@ export class AppState extends Model<IAppState> {
     this.basket = [];
     this.emitBasketChange();
   }
-
+ 
   addToBasket(item: Product) {
-    if(!this.basket.includes(item)) {
+    if(this.basket.includes(item) === false) {
       this.basket.push(item);
       this.emitBasketChange();
     }
@@ -83,9 +83,11 @@ export class AppState extends Model<IAppState> {
   
   private validatePayment() {
     const errors: typeof this.formErrors = {}; 
-    if(!this.order.address) {
+    let addressValue = this.order.address;
+
+    if(addressValue.length === 0) {
       errors.address = 'Укажите адрес'
-    }
+    } 
     this.updateFormErrors(errors);
   }
   
@@ -99,30 +101,32 @@ export class AppState extends Model<IAppState> {
     const errors: typeof this.formErrors = {}; 
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const phoneRegex = /^\+7[0-9]{10}$/;
-    if(!this.order.email) {
+    let emailValue = this.order.email;
+    let phoneValue = this.order.phone;
+
+    if(emailValue.length === 0) {
       errors.email = 'Укажите email'
-    } else if (!emailRegex.test(this.order.email)) { 
+    } else if (!emailRegex.test(emailValue)) { 
       errors.email = 'Некорректный адресс электронной почты'
     }
-    let phoneValue = this.order.phone;
     if (phoneValue.startsWith('8')) {
       phoneValue = '+7' + phoneValue.slice(1);
     }
-    if (!phoneValue) {
+    if (phoneValue.length === 0) {
       errors.phone = 'Укажите телефон';
     } else if (!phoneRegex.test(phoneValue)) {
       errors.phone = 'Некорректный формат номера'
     } else {
       this.order.phone = phoneValue;
     }
-    this.updateFormErrors(errors);
+    this.updateFormErrors(errors); 
   }
   
   // Обновить ошибки формы и сгенерировать соответствующие события
   private updateFormErrors(errors: FormErrors) {
     this.formErrors = errors;
     this.events.emit('formErrors:change', this.formErrors);
-    if(Object.keys(errors).length === 0) {
+    if (Object.keys(errors).length === 0) {
       this.events.emit('order:ready', this.order);
     }
   }

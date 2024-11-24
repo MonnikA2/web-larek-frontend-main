@@ -5,7 +5,7 @@ import { LarekApi } from './components/LarekApi';
 import { ContactsForm, PaymentForm } from './components/Order';
 import { Page } from './components/Page';
 import { EventEmitter } from './components/base/events';
-import { Basket } from './components/common/Backet';
+import { Basket } from './components/common/Basket';
 import { Modal } from './components/common/Modal';
 import { Success } from './components/common/Success';
 import { IContactsForm, IOrder, IPaymentForm } from './types';
@@ -55,7 +55,7 @@ events.on('preview:changed', (item: Product) => {
   const card = new Card(cloneTemplate(cardPreviewTemplate), {
     onClick: () => { 
     events.emit('product:toggle', item);
-    card.buttun = (appDate.basket.indexOf(item) < 0) ? 'Купить' : 'Удалить из корзины'
+    card.button = (appDate.basket.indexOf(item) < 0) ? 'Купить' : 'Удалить из корзины'
     }
   });
   modal.render({
@@ -105,7 +105,7 @@ events.on('basket:changed', (items: Product[]) => {
   const total = items.reduce((total, item) => total + item.price, 0);
   basket.total = total;
   appDate.order.total = total;
-  basket.toggleCheckoutButton(total === 0);
+  basket.toggleButton(total === 0);
 });
 
 events.on('counter:changed', (item: string[]) => {
@@ -132,7 +132,7 @@ events.on('order:open', () => {
 // Сменить способ оплаты
 events.on('payment:toggle', (target: HTMLElement) => {
   if (!target.classList.contains('button_alt-active')) {
-    delivery.toggeStateButtons(target);
+    delivery.toggleStateButtons(target);
     appDate.order.payment = PaymentMethod[target.getAttribute('name')];
   }
 });
@@ -140,10 +140,10 @@ events.on('payment:toggle', (target: HTMLElement) => {
 // Изменилось состояние валидации формы
 events.on('formErrors:change', (errors: Partial<IOrder>) => {
   const {payment, address, email, phone} = errors;
-  delivery.valid = !payment && !address;
-  contact.valid = !phone && !email;
-  delivery.errors = Object.values({payment, address}).filter(i => !!i).join('; ');
-  contact.errors = Object.values({email, phone}).filter(i => !!i).join('; ');
+  delivery.inValid = !payment && !address;
+  contact.inValid = !phone && !email;
+  delivery.errors = Object.values({payment, address}).filter(i => i = i).join('; ');
+  contact.errors = Object.values({email, phone}).filter(i => i = i).join('; ');
 });
 
 // Измененилось поле формы доставки
@@ -157,7 +157,7 @@ events.on(/^contacts\..*:change/, (data: { field: keyof IContactsForm, value: st
 });
 
 events.on('delivery:ready', () => {
-  delivery.valid = true;
+  delivery.inValid = true;
 })
 
 // Перейти к форме контактов
@@ -173,7 +173,7 @@ events.on('order:submit', () => {
 });
 
 events.on('contact:ready', () => {
-  contact.valid = true;
+  contact.inValid = true;
 })
 
 // Оформить заказ

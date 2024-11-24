@@ -16,15 +16,12 @@
     height: $headerElementsSize;
   }
 
-  &__logo {
-    &-image {
-      display: block;
-      height: 100%;
-    }
+  &__logo-image {
+    display: block;
+    height: 100%;
   }
 
   &__basket {
-    //@include mixins.icon($headerElementsSize, 'basket-2');
     @include mixins.link($primary, $hover);
     background-image: url(../images/shopping_cart.svg);
     height: 58px;

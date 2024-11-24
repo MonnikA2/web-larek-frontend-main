@@ -23,21 +23,22 @@ export class Basket extends Component<IBasketView> {
       });
     }
 
-    // Инициализация корзины в пустом состоянии и деактивация кнопки
+    // Инициализация корзины в пустом состоянии
     this.items = [];
-    this.toggleCheckoutButton(true);
   }
 
   // Включает/выключает кнопку оформления заказа
-  toggleCheckoutButton(isDisabled: boolean): void {
-    this._button.disabled = isDisabled;
+  toggleButton(value: boolean) {
+    this.setDisabled(this._button, value);
   }
-
+  
   // Обновить список товаров корзины
   set items(items: HTMLElement[]) {
     if (items.length) {
+      this.toggleButton(false);
       this._list.replaceChildren(...items);
     } else {
+      this.toggleButton(true);
       this._list.replaceChildren(createElement<HTMLParagraphElement> ('p', {
         textContent: 'Корзина пуста'
       }));

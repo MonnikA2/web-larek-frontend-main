@@ -105,7 +105,7 @@ export class Card extends Component<ICard> {
   }
 
   // Сеттер для текста кнопки
-  set buttun(value: string) {
+  set button(value: string) {
     if (this._button) {
       this._button.textContent = value;
     }

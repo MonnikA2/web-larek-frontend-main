@@ -15,6 +15,6 @@ export abstract class Model<T> {
   }
 }
 
-export const isModal = (obj: unknown): obj is Model<any> => {
-  return obj instanceof isModal;
+export const isModel = (obj: unknown): obj is Model<any> => {
+  return obj instanceof isModel;
 }
