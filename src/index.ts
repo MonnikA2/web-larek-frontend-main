@@ -105,7 +105,7 @@ events.on('basket:changed', (items: Product[]) => {
   const total = items.reduce((total, item) => total + item.price, 0);
   basket.total = total;
   appDate.order.total = total;
-  basket.toggleButton(total === 0);
+  basket.setButtonStatus(total === 0);
 });
 
 events.on('counter:changed', (item: string[]) => {
@@ -140,8 +140,8 @@ events.on('payment:toggle', (target: HTMLElement) => {
 // Изменилось состояние валидации формы
 events.on('formErrors:change', (errors: Partial<IOrder>) => {
   const {payment, address, email, phone} = errors;
-  delivery.inValid = !payment && !address;
-  contact.inValid = !phone && !email;
+  delivery.disableBtn = !payment && !address;
+  contact.disableBtn = !phone && !email;
   delivery.errors = Object.values({payment, address}).filter(i => i = i).join('; ');
   contact.errors = Object.values({email, phone}).filter(i => i = i).join('; ');
 });
@@ -157,7 +157,7 @@ events.on(/^contacts\..*:change/, (data: { field: keyof IContactsForm, value: st
 });
 
 events.on('delivery:ready', () => {
-  delivery.inValid = true;
+  delivery.disableBtn = false;
 })
 
 // Перейти к форме контактов
@@ -173,7 +173,7 @@ events.on('order:submit', () => {
 });
 
 events.on('contact:ready', () => {
-  contact.inValid = true;
+  contact.disableBtn = false;
 })
 
 // Оформить заказ

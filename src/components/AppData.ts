@@ -41,10 +41,9 @@ export class AppState extends Model<IAppState> {
   }
  
   addToBasket(item: Product) {
-    if(this.basket.includes(item) === false) {
+    if(this.basket.includes(item)) return; 
       this.basket.push(item);
-      this.emitBasketChange();
-    }
+      this.emitBasketChange(); 
   }
 
   removeFromBasket(item: Product) {
@@ -83,9 +82,8 @@ export class AppState extends Model<IAppState> {
   
   private validatePayment() {
     const errors: typeof this.formErrors = {}; 
-    let addressValue = this.order.address;
 
-    if(addressValue.length === 0) {
+    if(!this.order.address) {
       errors.address = 'Укажите адрес'
     } 
     this.updateFormErrors(errors);

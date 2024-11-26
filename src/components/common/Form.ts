@@ -50,8 +50,8 @@ export class Form<T> extends Component<IFormState> {
     });
   }
 
-  set inValid(value: boolean) {
-    this._submit.disabled = !value;
+  set disableBtn(value: boolean) {
+    this.setDisabled(this._submit, !value);
   }
 
   set errors(value: string) {

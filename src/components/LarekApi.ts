@@ -33,7 +33,6 @@ export class LarekApi extends Api implements ILarekApi {
   
   // Оформление заказа
   async orderProducts(order: IOrder): Promise<IOrderResult> {
-    const data: IOrderResult = await this.post(`/order`, order);
-    return data;
+    return await this.post(`/order`, order);
   }
 }

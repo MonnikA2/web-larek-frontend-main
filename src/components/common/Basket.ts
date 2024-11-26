@@ -28,17 +28,17 @@ export class Basket extends Component<IBasketView> {
   }
 
   // Включает/выключает кнопку оформления заказа
-  toggleButton(value: boolean) {
+  setButtonStatus(value: boolean) {
     this.setDisabled(this._button, value);
   }
   
   // Обновить список товаров корзины
   set items(items: HTMLElement[]) {
     if (items.length) {
-      this.toggleButton(false);
+      this.setButtonStatus(false);
       this._list.replaceChildren(...items);
     } else {
-      this.toggleButton(true);
+      this.setButtonStatus(true);
       this._list.replaceChildren(createElement<HTMLParagraphElement> ('p', {
         textContent: 'Корзина пуста'
       }));

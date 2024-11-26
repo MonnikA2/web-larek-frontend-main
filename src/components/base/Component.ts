@@ -8,7 +8,7 @@ export abstract class Component<T> {
 
   protected setText(element: HTMLElement, value: string) {
     if (element) {
-      element.textContent = String(value);
+      element.textContent = value;
     }
   }
 
