@@ -132,7 +132,7 @@ events.on('order:open', () => {
 // Сменить способ оплаты
 events.on('payment:toggle', (target: HTMLElement) => {
   if (!target.classList.contains('button_alt-active')) {
-    delivery.toggleStateButtons(target);
+    delivery.toggleStateButtons();
     appDate.order.payment = PaymentMethod[target.getAttribute('name')];
   }
 });
